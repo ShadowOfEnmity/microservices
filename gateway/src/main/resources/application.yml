@@ -1,3 +1,4 @@
+
 jwt:
   secret-key: Ti1MMkRsVEd3Qkt5dVJMMlNLWXo4LWE2SVkwUG90MnZpdUhyRUlzQ0xtbz0=
 
@@ -29,3 +30,5 @@ spring:
           uri: lb://IDENTITY-SERVICE
           predicates:
             - Path=/auth/**
+server:
+  port: 8310
