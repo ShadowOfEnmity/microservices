@@ -10,6 +10,7 @@ import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Component;
         builder = @Builder(disableBuilder = true))
 public abstract class ExperienceMapper {
 
+    @Autowired
     protected IndustryServiceClient industryClient;
 
     @Mapping(target = "industry", expression = "java(getIndustryName(industryClient.getIndustryById(experience.getIndustry())))")

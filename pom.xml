@@ -12,16 +12,22 @@
         <module>experience-service</module>
         <module>registration-service</module>
         <module>industry-service</module>
+        <module>gateway</module>
+        <module>identity-service</module>
     </modules>
 
     <properties>
         <java.version>17</java.version>
+        <spring.boot.maven.plugin.version>3.0.1</spring.boot.maven.plugin.version>
         <spring.boot.dependencies.version>3.3.3</spring.boot.dependencies.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.projectlombok>1.18.24</org.projectlombok>
         <eureka.client>4.1.3</eureka.client>
         <eureka.server>4.1.3</eureka.server>
         <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
+        <spring.cloud.version>2023.0.3</spring.cloud.version>
+        <spring.boot.maven.compiler.plugin.version>3.10.1</spring.boot.maven.compiler.plugin.version>
+
     </properties>
 
     <dependencyManagement>
@@ -30,6 +36,13 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring.boot.dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -43,24 +56,39 @@
                 <artifactId>lombok-mapstruct-binding</artifactId>
                 <version>${org.projectlombok.mapstruct.binding}</version>
             </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-                <version>${eureka.client}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
-                <version>${eureka.server}</version>
-            </dependency>
+            <!--            <dependency>-->
+            <!--                <groupId>org.springframework.cloud</groupId>-->
+            <!--                <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
+            <!--                <version>${eureka.client}</version>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>org.springframework.cloud</groupId>-->
+            <!--                <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>-->
+            <!--                <version>${eureka.server}</version>-->
+            <!--            </dependency>-->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${org.projectlombok}</version>
                 <optional>true</optional>
             </dependency>
+            <!--            <dependency>-->
+            <!--                <groupId>org.springframework.cloud</groupId>-->
+            <!--                <artifactId>spring-cloud-starter-gateway</artifactId>-->
 
+            <!--            </dependency>-->
         </dependencies>
     </dependencyManagement>
 
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${spring.boot.maven.compiler.plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 </project>

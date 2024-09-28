@@ -6,6 +6,7 @@ import by.javaguru.exceptions.IndustryNotFound;
 import by.javaguru.persistence.repository.IndustryRepository;
 import by.javaguru.util.mapper.IndustryMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,8 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class IndustryServiceImpl implements IndustryService {
 
+    @Autowired
     IndustryRepository industryRepository;
 
+    @Autowired
     IndustryMapper industryMapper;
 
     @Transactional

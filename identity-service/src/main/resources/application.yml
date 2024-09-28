@@ -1,10 +1,6 @@
-server:
-  port: 8313
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
+jwt:
+  secret-key: Ti1MMkRsVEd3Qkt5dVJMMlNLWXo4LWE2SVkwUG90MnZpdUhyRUlzQ0xtbz0=
+  expiration-time: 1800000
 
 logging:
   level:
@@ -14,11 +10,12 @@ logging:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
 
 spring:
+  application:
+    name: IDENTITY-SERVICE
   sql:
     init:
       mode: always
       schema-locations: classpath:schema.sql
-      data-locations: classpath:data.sql
   h2:
     console:
       enabled: true
@@ -33,14 +30,15 @@ spring:
     properties:
       hibernate:
         format_sql: true
-  application:
-    name: EXPERIENCE-SERVICE
   datasource:
-    url: jdbc:h2:mem:db
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
-  jackson:
-    deserialization:
-      fail-on-unknown-properties: true
+      url: jdbc:h2:mem:db
+      username: sa
+      password:
+      driver-class-name: org.h2.Driver
 
+server:
+  port: 8311
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

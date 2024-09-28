@@ -1,0 +1,31 @@
+jwt:
+  secret-key: Ti1MMkRsVEd3Qkt5dVJMMlNLWXo4LWE2SVkwUG90MnZpdUhyRUlzQ0xtbz0=
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+spring:
+  application:
+    name: GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: experience-service
+          uri: lb://EXPERIENCE-SERVICE
+          predicates:
+            - Path=/api/v1/experience/**
+          filters:
+            - AuthenticationFilter
+
+        - id: industry-service
+          uri: lb://INDUSTRY-SERVICE
+          predicates:
+            - Path=/api/v1/industry/**
+          filters:
+            - AuthenticationFilter
+
+        - id: identity-service
+          uri: lb://IDENTITY-SERVICE
+          predicates:
+            - Path=/auth/**
