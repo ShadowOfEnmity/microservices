@@ -7,10 +7,9 @@ import by.javaguru.dto.IndustryResponseDto;
 import by.javaguru.exceptions.ExperienceNotFound;
 import by.javaguru.persistence.model.Experience;
 import by.javaguru.persistence.repository.ExperienceRepository;
-import by.javaguru.service.client.IndustryServiceClient;
+import by.javaguru.service.client.IndustryServiceFeignClient;
 import by.javaguru.util.mapper.ExperienceMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,12 +22,17 @@ public class ExperienceServiceImpl implements ExperienceService {
 
     private final ExperienceRepository experienceRepository;
 
-    private final IndustryServiceClient industryServiceClient;
+    //    private final IndustryServiceClient industryServiceClient;
+    private final IndustryServiceFeignClient industryServiceClient;
 
     @Transactional
     @Override
     public ExperienceResponseDto save(ExperienceDto experience) {
         IndustryResponseDto industryResponse = industryServiceClient.save(IndustryDto.builder().withName(experience.industry()).build());
+//        if (!(response.getStatusCode().is2xxSuccessful() && response.hasBody())) {
+//            throw new IndustryException("Industry not found");
+//        }
+//        var industryResponse = response.getBody();
         Experience savedExperience = experienceRepository.save(experienceMapper.toExperienceEntityByIndustryResponseDto(experience, industryResponse));
         return experienceMapper.toExperienceResponseDto(savedExperience, industryResponse);
     }

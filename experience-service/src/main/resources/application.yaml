@@ -5,6 +5,41 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+management:
+  endpoints:
+    web:
+      exposure:
+        include: mapping,bus-refresh,bus-env,health,circuitbreakerevents,retry
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+  health:
+    circuitbreakers:
+      enabled: true
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      industry-service:
+        failure-rate-threshold: 10
+        automatic-transition-from-open-to-half-open-enabled: true
+        wait-duration-in-open-state:
+          seconds: 10
+        sliding-window-type: count_based
+        sliding-window-size: 2
+        minimum-number-of-calls: 1
+        event-consumer-buffer-size: 10
+        register-health-indicator: true
+        permitted-number-of-calls-in-half-open-state: 3
+    circuit-breaker-aspect-order: 1
+  retry:
+    retry-aspect-order: 2
+    instances:
+      industry-service:
+        max-attempts: 15
+        wait-duration:
+          seconds: 5
 
 logging:
   level:
@@ -43,4 +78,3 @@ spring:
   jackson:
     deserialization:
       fail-on-unknown-properties: true
-

@@ -18,15 +18,15 @@ public class IndustryController {
     private IndustryServiceImpl industryService;
 
     @PostMapping
-    public ResponseEntity<IndustryResponseDto> save(@RequestBody IndustryDto industry){
-        var response = industryService.save(industry);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    public IndustryResponseDto save(@RequestBody IndustryDto industry) {
+        return industryService.save(industry);
+//        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<IndustryResponseDto> getIndustryById(@PathVariable("id") Long id) {
-        var response = industryService.findIndustryById(id);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    public IndustryResponseDto getIndustryById(@PathVariable("id") Long id) {
+        return industryService.findIndustryById(id);
+//        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

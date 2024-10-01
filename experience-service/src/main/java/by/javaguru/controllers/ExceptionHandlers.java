@@ -1,8 +1,7 @@
 package by.javaguru.controllers;
 
-import by.javaguru.exceptions.ErrorResponse;
-import by.javaguru.exceptions.ExperienceNotFound;
-import by.javaguru.exceptions.IndustryException;
+import by.javaguru.exceptions.*;
+import jakarta.ws.rs.InternalServerErrorException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -25,12 +24,41 @@ public class ExceptionHandlers {
                 ZonedDateTime.now().withZoneSameInstant(ZoneId.of(EUROPE_MINSK)));
     }
 
-    @ExceptionHandler(IndustryException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleAboutNotFoundException(IndustryException exception) {
+//    @ExceptionHandler(IndustryException.class)
+//    @ResponseStatus(HttpStatus.NOT_FOUND)
+//    public ErrorResponse handleAboutNotFoundException(IndustryException exception) {
+//        return new ErrorResponse(
+//                HttpStatus.NOT_FOUND.value(),
+//                exception.getMessage(),
+//                ZonedDateTime.now().withZoneSameInstant(ZoneId.of(EUROPE_MINSK)));
+//    }
+
+    @ExceptionHandler(IndustryBadRequestException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleEmptyFileException(IndustryBadRequestException exception) {
         return new ErrorResponse(
-                HttpStatus.NOT_FOUND.value(),
+                HttpStatus.BAD_REQUEST.value(),
                 exception.getMessage(),
                 ZonedDateTime.now().withZoneSameInstant(ZoneId.of(EUROPE_MINSK)));
     }
+
+    @ExceptionHandler(IndustryResourceNotFound.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleEmptyFileException(IndustryResourceNotFound exception) {
+        return new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                exception.getMessage(),
+                ZonedDateTime.now().withZoneSameInstant(ZoneId.of(EUROPE_MINSK)));
+    }
+
+
+    @ExceptionHandler(InternalServerErrorException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleImageStorageException(InternalServerErrorException exception) {
+        return new ErrorResponse(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                exception.getMessage(),
+                ZonedDateTime.now().withZoneSameInstant(ZoneId.of(EUROPE_MINSK)));
+    }
+
 }

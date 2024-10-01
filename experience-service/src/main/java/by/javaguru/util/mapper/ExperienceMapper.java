@@ -4,7 +4,7 @@ import by.javaguru.dto.ExperienceDto;
 import by.javaguru.dto.ExperienceResponseDto;
 import by.javaguru.dto.IndustryResponseDto;
 import by.javaguru.persistence.model.Experience;
-import by.javaguru.service.client.IndustryServiceClient;
+import by.javaguru.service.client.IndustryServiceFeignClient;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
@@ -19,8 +19,10 @@ import org.springframework.stereotype.Component;
         builder = @Builder(disableBuilder = true))
 public abstract class ExperienceMapper {
 
+//    @Autowired
+//    protected IndustryServiceClient industryClient;
     @Autowired
-    protected IndustryServiceClient industryClient;
+    protected IndustryServiceFeignClient industryClient;
 
     @Mapping(target = "industry", expression = "java(getIndustryName(industryClient.getIndustryById(experience.getIndustry())))")
     public abstract ExperienceResponseDto toExperienceResponseDto(Experience experience);
