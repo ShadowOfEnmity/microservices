@@ -1,6 +1,3 @@
-jwt:
-  secret-key: Ti1MMkRsVEd3Qkt5dVJMMlNLWXo4LWE2SVkwUG90MnZpdUhyRUlzQ0xtbz0=
-
 logging:
   level:
     org.springframework.security: TRACE
@@ -19,8 +16,6 @@ spring:
           uri: lb://EXPERIENCE-SERVICE
           predicates:
             - Path=/api/v1/experience/**
-        #          filters:
-        #            - AuthenticationFilter
 
         - id: industry-service
           uri: lb://INDUSTRY-SERVICE
