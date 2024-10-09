@@ -1,45 +1,33 @@
 package by.javaguru.controller;
 
 import by.javaguru.dto.AuthRequest;
-import by.javaguru.entity.UserCredential;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
+import by.javaguru.service.KeycloakService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
-import by.javaguru.service.AuthService;
+import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/auth")
 public class AuthController {
 
-    @Autowired
-    private AuthService service;
+    private final KeycloakService keycloakService;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @PostMapping("/register")
-    public String addNewUser(@RequestBody UserCredential user) {
-        return service.saveUser(user);
-    }
-
-    @PostMapping("/token")
-    public String getToken(@RequestBody AuthRequest authRequest) {
-        Authentication authenticate = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authRequest.getName(), authRequest.getPassword())
-        );
-        if (authenticate.isAuthenticated()) {
-            return service.generateToken(authRequest.getName());
-        } else {
-            throw new RuntimeException("invalid access");
-        }
+    @PostMapping(value = "/token",  consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Mono<Map<String, Object>>> getToken(@RequestBody AuthRequest authRequest) {
+        var token = keycloakService.getToken(authRequest.getLogin(), authRequest.getPassword());
+        return new ResponseEntity<>(token, HttpStatus.OK);
     }
 
     @GetMapping("/validate")
-    public String validateToken(@RequestParam("token") String token) {
-        service.validateToken(token);
-        return "Token is valid";
+    public ResponseEntity<Mono<Boolean>> validationToken(@RequestParam("token") String token) {
+        var mapMono = keycloakService.validateToken(token);
+        return new ResponseEntity<>(mapMono, HttpStatus.OK);
     }
+
 }

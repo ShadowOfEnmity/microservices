@@ -1,40 +1,31 @@
-jwt:
-  secret-key: Ti1MMkRsVEd3Qkt5dVJMMlNLWXo4LWE2SVkwUG90MnZpdUhyRUlzQ0xtbz0=
-  expiration-time: 1800000
-
 logging:
   level:
     root: INFO
-    com.example: DEBUG
+
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+keycloak:
+  hostname: http://localhost:8080
+  realm: profiler
 
 spring:
   application:
     name: IDENTITY-SERVICE
-  sql:
-    init:
-      mode: always
-      schema-locations: classpath:schema.sql
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-      settings:
-        trace: false
-        web-allow-others: false
-  jpa:
-    hibernate:
-      ddl-auto: none
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-  datasource:
-      url: jdbc:h2:mem:db
-      username: sa
-      password:
-      driver-class-name: org.h2.Driver
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: keycloak-service
+            client-secret: iDQhobCnQHCF00R5Ye3a3MSkRLUvbPTA
+            scope: openid
+            authorization-grant-type: password
+        provider:
+          keycloak:
+            issuer-uri: ${keycloak.hostname}/realms/${keycloak.realm}
+
+
+
 
 server:
   port: 8311

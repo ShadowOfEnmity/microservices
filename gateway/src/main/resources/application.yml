@@ -1,6 +1,9 @@
-
 jwt:
   secret-key: Ti1MMkRsVEd3Qkt5dVJMMlNLWXo4LWE2SVkwUG90MnZpdUhyRUlzQ0xtbz0=
+
+logging:
+  level:
+    org.springframework.security: TRACE
 
 eureka:
   client:
@@ -16,19 +19,24 @@ spring:
           uri: lb://EXPERIENCE-SERVICE
           predicates:
             - Path=/api/v1/experience/**
-          filters:
-            - AuthenticationFilter
+        #          filters:
+        #            - AuthenticationFilter
 
         - id: industry-service
           uri: lb://INDUSTRY-SERVICE
           predicates:
             - Path=/api/v1/industry/**
-          filters:
-            - AuthenticationFilter
 
         - id: identity-service
           uri: lb://IDENTITY-SERVICE
           predicates:
-            - Path=/auth/**
+              - Path=/auth/**
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/profiler
+
 server:
   port: 8310
