@@ -25,8 +25,8 @@ public class AppConfig {
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())))
                 .authorizeExchange(exchange -> exchange
-                        .pathMatchers("/api/v1/experience/**","/auth/token", "/auth/validate").permitAll()
-                        .pathMatchers("/api/v1/industry/**").hasRole("USER")
+                        .pathMatchers("/auth/token").permitAll()
+                        .pathMatchers("/api/v1/industry/**","/api/v1/experience/**").hasRole("USER")
                         .anyExchange().authenticated()
                 ).build();
     }

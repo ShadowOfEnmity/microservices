@@ -37,22 +37,4 @@ public class KeycloakServiceImpl implements KeycloakService{
                         }).onErrorResume(WebClientResponseException.class, e -> Mono.error(new ResponseStatusException(e.getStatusCode(), e.getResponseBodyAsString()))));
     }
 
-    public Mono<Boolean> validateToken(String token) {
-        return clientRegistrationRepository.findByRegistrationId("keycloak")
-                .flatMap(clientRegistration -> webClient
-                        .post()
-                        .uri(Strings.concat(clientRegistration.getProviderDetails().getIssuerUri(), "/protocol/openid-connect/token/introspect"))
-                        .body(BodyInserters.fromFormData(OAuth2ParameterNames.CLIENT_ID, clientRegistration.getClientId())
-                                .with(OAuth2ParameterNames.CLIENT_SECRET, clientRegistration.getClientSecret())
-                                .with("token", token))
-                        .retrieve()
-                        .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
-                        })
-                        .map(responseMap -> (Boolean) responseMap.get("active"))
-                        .onErrorResume(WebClientResponseException.class, e -> {
-                            HttpStatusCode statusCode = e.getStatusCode();
-                            String responseBody = e.getResponseBodyAsString();
-                            return Mono.error(new ResponseStatusException(statusCode, responseBody, e));
-                        }));
-    }
 }

@@ -1,6 +1,7 @@
 package by.javaguru.config;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
@@ -26,8 +27,7 @@ public class OAuth2ClientConfig {
                 .clientSecret(keycloakProperties.getClientSecret())
                 .scope(keycloakProperties.getScope())
                 .authorizationGrantType(new AuthorizationGrantType(keycloakProperties.getAuthorizationGrantType()))
-                .issuerUri(keycloakProperties.getIssuerUri())
-                .tokenUri("http://localhost:8080/realms/profiler/protocol/openid-connect/token")
+                .tokenUri(Strings.concat(keycloakProperties.getIssuerUri(), "/protocol/openid-connect/token"))
                 .build();
 
         return new InMemoryReactiveClientRegistrationRepository(Collections.singletonList(keycloakClientRegistration));
