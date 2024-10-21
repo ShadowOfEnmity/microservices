@@ -14,6 +14,7 @@
         <module>industry-service</module>
         <module>gateway</module>
         <module>identity-service</module>
+        <module>config-service</module>
     </modules>
 
     <properties>
@@ -27,7 +28,6 @@
         <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
         <spring.cloud.version>2023.0.3</spring.cloud.version>
         <spring.boot.maven.compiler.plugin.version>3.10.1</spring.boot.maven.compiler.plugin.version>
-
     </properties>
 
     <dependencyManagement>
@@ -56,16 +56,6 @@
                 <artifactId>lombok-mapstruct-binding</artifactId>
                 <version>${org.projectlombok.mapstruct.binding}</version>
             </dependency>
-            <!--            <dependency>-->
-            <!--                <groupId>org.springframework.cloud</groupId>-->
-            <!--                <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
-            <!--                <version>${eureka.client}</version>-->
-            <!--            </dependency>-->
-            <!--            <dependency>-->
-            <!--                <groupId>org.springframework.cloud</groupId>-->
-            <!--                <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>-->
-            <!--                <version>${eureka.server}</version>-->
-            <!--            </dependency>-->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>

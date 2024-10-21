@@ -10,11 +10,13 @@ import by.javaguru.persistence.repository.ExperienceRepository;
 import by.javaguru.service.client.IndustryServiceFeignClient;
 import by.javaguru.util.mapper.ExperienceMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ExperienceServiceImpl implements ExperienceService {
 
 
@@ -22,24 +24,25 @@ public class ExperienceServiceImpl implements ExperienceService {
 
     private final ExperienceRepository experienceRepository;
 
-    //    private final IndustryServiceClient industryServiceClient;
     private final IndustryServiceFeignClient industryServiceClient;
 
     @Transactional
     @Override
     public ExperienceResponseDto save(ExperienceDto experience) {
-        IndustryResponseDto industryResponse = industryServiceClient.save(IndustryDto.builder().withName(experience.industry()).build());
-//        if (!(response.getStatusCode().is2xxSuccessful() && response.hasBody())) {
-//            throw new IndustryException("Industry not found");
-//        }
-//        var industryResponse = response.getBody();
+        IndustryDto industryDto = IndustryDto.builder().withName(experience.industry()).build();
+        IndustryResponseDto industryResponse = industryServiceClient.save(industryDto);
+        log.debug("Industry {} is saved", industryDto);
         Experience savedExperience = experienceRepository.save(experienceMapper.toExperienceEntityByIndustryResponseDto(experience, industryResponse));
-        return experienceMapper.toExperienceResponseDto(savedExperience, industryResponse);
+        ExperienceResponseDto experienceResponseDto = experienceMapper.toExperienceResponseDto(savedExperience, industryResponse);
+        log.debug("Experience {} is saved", experienceResponseDto);
+        return experienceResponseDto;
     }
 
     @Transactional(readOnly = true)
     @Override
     public ExperienceResponseDto findExperienceById(long id) {
-        return experienceRepository.findExperienceById(id).map(experienceMapper::toExperienceResponseDto).orElseThrow(() -> new ExperienceNotFound("Experience not found"));
+        ExperienceResponseDto responseDto = experienceRepository.findExperienceById(id).map(experienceMapper::toExperienceResponseDto).orElseThrow(() -> new ExperienceNotFound("Experience not found"));
+        log.debug("Experience {} is found", responseDto);
+        return responseDto;
     }
 }

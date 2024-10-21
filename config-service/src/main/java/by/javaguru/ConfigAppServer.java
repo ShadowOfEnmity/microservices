@@ -2,12 +2,12 @@ package by.javaguru;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+import org.springframework.cloud.config.server.EnableConfigServer;
 
 @SpringBootApplication
-@EnableEurekaServer
-public class RegistrationServiceApplication {
+@EnableConfigServer
+public class ConfigAppServer {
     public static void main(String[] args) {
-        SpringApplication.run(RegistrationServiceApplication.class, args);
+        SpringApplication.run(ConfigAppServer.class, args);
     }
 }

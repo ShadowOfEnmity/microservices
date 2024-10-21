@@ -4,6 +4,7 @@ import by.javaguru.dto.IndustryDto;
 import by.javaguru.dto.IndustryResponseDto;
 import by.javaguru.service.IndustryServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

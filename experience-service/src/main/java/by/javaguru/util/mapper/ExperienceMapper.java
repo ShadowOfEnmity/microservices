@@ -6,10 +6,7 @@ import by.javaguru.dto.IndustryResponseDto;
 import by.javaguru.persistence.model.Experience;
 import by.javaguru.service.client.IndustryServiceFeignClient;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.Builder;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -40,5 +37,4 @@ public abstract class ExperienceMapper {
     public String getIndustryName(IndustryResponseDto industry){
         return industry.name();
     }
-
 }

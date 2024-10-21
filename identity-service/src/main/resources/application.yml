@@ -1,7 +1,7 @@
 logging:
   level:
     root: INFO
-
+    by.javaguru: debug
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
 keycloak:

@@ -57,10 +57,6 @@ public class Experience {
     @Column(name = "industry_id")
     private Long industry;
 
-//    @ManyToOne
-//    @JoinColumn(name = "cv_id", insertable = false, updatable = false)
-//    private CurriculumVitae curriculumVitae;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

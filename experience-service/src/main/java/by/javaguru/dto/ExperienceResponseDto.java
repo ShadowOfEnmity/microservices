@@ -1,6 +1,9 @@
 package by.javaguru.dto;
 
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.time.YearMonth;

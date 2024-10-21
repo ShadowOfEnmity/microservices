@@ -26,12 +26,13 @@ spring:
           uri: lb://IDENTITY-SERVICE
           predicates:
               - Path=/auth/**
-
+  config:
+    import: optional:configserver:http://localhost:8888
   security:
     oauth2:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8080/realms/profiler
 
-server:
-  port: 8310
+#server:
+#  port: 8310

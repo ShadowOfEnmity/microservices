@@ -1,6 +1,7 @@
 package by.javaguru.dto;
 
 import lombok.Builder;
+import lombok.ToString;
 
 import java.io.Serializable;
 
